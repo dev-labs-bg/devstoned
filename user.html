@@ -1,0 +1,59 @@
+<style>
+	#text{
+		height: 200px;
+		width: 99%;
+		border: 1px solid #aaa;
+		overflow: scroll;
+	}
+	#message {
+		width: 99%;
+	}
+
+	.hidden {
+		display: none;
+	}
+
+	.activeTurn {
+		background-color: red;
+	}
+</style>
+
+<div id="user">
+</div>
+<button id="roll">Roll</button>
+<div id="points">0</div>
+<div id="position">0</div>
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script>
+	var socket = io.connect('http://localhost:8080');
+
+	//handle user events 
+	socket.on('points', function(points) {
+		updatePoints(points);
+	});
+	socket.on('position', function(position) {
+		updatePosition(position);
+	});
+	socket.on('nextTurn', function(userId) {
+		changeActive(userId);
+	});
+
+	$("#roll").click(function(){
+		roll();
+	});
+
+	function updatePoints(points) {
+		$("#points").text(points + ' pts.');
+	}
+	function updatePosition(position) {
+		$("#position").text(position);
+	}
+	function roll() {
+		socket.emit('roll');
+	}
+</script>
