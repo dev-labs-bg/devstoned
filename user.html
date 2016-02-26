@@ -1,5 +1,153 @@
+<!DOCTYPE HTML>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Devstone(d)</title>
+
+		<link rel="shortcut icon" href="img/favicon.ico" />
+
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+                              
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="main-container">
+		   <section class="single-player-app">
+		   		<div class="center">
+		   			<div class="row">
+		   				<div class="col-md-12 text-center">
+		   					<div id="user" class="player test active blue"></div>
+		   				</div>
+		   			</div>
+		   		</div>
+		   		<div class="center board">
+		   			<div class="center">
+						<div class="row">
+			   				<div class="col-md-12 text-center">
+			   					<div id="roll" class="btn blue-btn">Roll</div>
+			   					<div id="ready" class="btn blue-btn">Ready</div>
+			   				</div>
+			   			</div>
+		   			</div>
+		   			<div class="row">
+		   				<div class="col-md-12 text-center">
+		   					<div class="section-title">Current Position:</div>
+		   					<div id="position">0</div>
+		   				</div>
+		   			</div>
+			   		<div class="row">
+						<div class="col-md-2 board-box start-box">
+							<span class="label">Start</span>
+						</div>
+						<div class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 board-box duck-box"><span class="label">Bonus++</span></div>
+						<div class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 board-box question-box"><span class="label">Surprice!?</span></div>
+						<div class="col-md-2 board-box lunch-box"><span class="label">Lunch Time</span></div>
+					</div>
+					<div class="row">
+						<div class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 board-box card-box"><span class="label">Pick a Card</span></div>
+					</div>
+					<div class="row">
+						<div class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 board-box simple-box"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 board-box simple-box"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-2 board-box card-box"><span class="label">Pick a Card</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 board-box simple-box"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-2 board-box black-box"><span class="label">Dev Jail</span></div>
+						<div class="col-md-2 board-box question-box"><span class="label">Surprice!?</span></div>
+						<div class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 board-box duck-box"><span class="label">Bonus++</span></div>
+						<div class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 board-box crossroad-box"><span class="label">Crossroad</span></div>
+					</div>
+					<div class="row">
+		   				<div class="col-md-12 text-center">
+		   					<div class="section-title">Total:<span id="points">168</span></div>
+		   				</div>
+		   			</div>
+				</div>
+		   </section>
+		</div>
+
+	</body>
+
+	<!-- Scripts -->
+    <script src="js/jQuery.js"></script>
+    <script src="js/script.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io.connect('http://localhost:8080');
+		socket.on('connect', function(){
+			socket.emit('initialize_user');
+		});
+
+		//handle user events 
+		socket.on('points', function(points) {
+			updatePoints(points);
+		});
+		socket.on('position', function(position) {
+			updatePosition(position);
+		});
+
+		$('#roll').click(function(){
+			roll();
+		});
+		$('#ready').click(function(){
+			ready();
+		});
+
+		function updatePoints(points) {
+			$('#points').text(points + ' pts.');
+		}
+		function updatePosition(position) {
+			$('#position').text(position);
+		}
+		function roll() {
+			socket.emit('roll');
+		}
+		function ready() {
+			$('#ready').addClass('hidden');
+			socket.emit('ready');
+		}
+	</script>
+
+</html>
+
+
 <style>
-	#text{
+	/*#text{
 		height: 200px;
 		width: 99%;
 		border: 1px solid #aaa;
@@ -15,53 +163,12 @@
 
 	.activeTurn {
 		background-color: red;
-	}
+	}*/
 </style>
-
+<!-- 
 <div id="user">
 </div>
 <button id="roll">Roll</button>
 <button id="ready">Ready!</button>
 <div id="points">0</div>
-<div id="position">0</div>
-
-
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://localhost:8080/socket.io/socket.io.js"></script>
-<script>
-	var socket = io.connect('http://localhost:8080');
-	socket.on('connect', function(){
-		socket.emit('initialize_user');
-	});
-
-	//handle user events 
-	socket.on('points', function(points) {
-		updatePoints(points);
-	});
-	socket.on('position', function(position) {
-		updatePosition(position);
-	});
-
-	$('#roll').click(function(){
-		roll();
-	});
-	$('#ready').click(function(){
-		ready();
-	});
-
-	function updatePoints(points) {
-		$('#points').text(points + ' pts.');
-	}
-	function updatePosition(position) {
-		$('#position').text(position);
-	}
-	function roll() {
-		socket.emit('roll');
-	}
-	function ready() {
-		$('#ready').addClass('hidden');
-		socket.emit('ready');
-	}
-</script>
+<div id="position">0</div> -->

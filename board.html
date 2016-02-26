@@ -1,5 +1,128 @@
+<!DOCTYPE HTML>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Devstone(d)</title>
+
+		<link rel="shortcut icon" href="img/favicon.ico" />
+
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+                              
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="main-container">
+		   <section class="body">
+		   		<div class="center board" id='board'>
+			   		<div class="row">
+						<div id="position-1" class="col-md-2 board-box start-box">
+							<span class="label">Start</span>
+							<div id="user-1" class="player non-visible test blue"></div>
+							<div id="user-2" class="player non-visible test red"></div>
+							<div id="user-3" class="player non-visible test active green"></div>
+							<div id="user-4" class="player non-visible test yellow"></div>
+						</div>
+						<div id="position-2" class="col-md-2 board-box simple-box"></div>
+						<div id="position-3" class="col-md-2 board-box duck-box"><span class="label">Bonus++</span></div>
+						<div id="position-4" class="col-md-2 board-box simple-box"></div>
+						<div id="position-5" class="col-md-2 board-box question-box"><span class="label">Surprice!?</span></div>
+						<div id="position-6" class="col-md-2 board-box lunch-box"><span class="label">Lunch Time</span></div>
+					</div>
+					<div class="row">
+						<div id="position-20"class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div id="position-7"class="col-md-2 board-box card-box"><span class="label">Pick a Card</span></div>
+					</div>
+					<div class="row">
+						<div id="position-19" class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div id="position-8" class="col-md-2 board-box simple-box"></div>
+					</div>
+					<div class="row">
+						<div id="position-18" class="col-md-2 board-box simple-box"></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div id="position-9" class="col-md-2 board-box simple-box"></div>
+					</div>
+					<div class="row">
+						<div id="position-17" class="col-md-2 board-box card-box"><span class="label">Pick a Card</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div class="col-md-2 non-visible board-box"><span class="label">Box</span></div>
+						<div id="position-10" class="col-md-2 board-box simple-box"></div>
+					</div>
+					<div class="row">
+						<div id="position-16" class="col-md-2 board-box black-box"><span class="label">Dev Jail</span></div>
+						<div id="position-15" class="col-md-2 board-box question-box"><span class="label">Surprice!?</span></div>
+						<div id="position-14" class="col-md-2 board-box simple-box"></div>
+						<div id="position-13"class="col-md-2 board-box duck-box"><span class="label">Bonus++</span></div>
+						<div id="position-12" class="col-md-2 board-box simple-box"></div>
+						<div id="position-11" class="col-md-2 board-box crossroad-box"><span class="label">Crossroad</span></div>
+					</div>
+				</div>
+		   </section>
+		</div>
+
+	</body>
+
+	<!-- Scripts -->
+    <script src="js/jQuery.js"></script>
+    <script src="js/script.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io.connect('http://localhost:8080');
+		socket.on("connect", function(){
+			socket.emit('initialize_board');
+		});
+
+		//handle user events 
+		socket.on("update", function(userId, pos) {
+			changePosition(userId, pos);
+		});
+		socket.on("join", function(userId) {
+			addUser(userId);
+		});
+		socket.on("nextTurn", function(userId) {
+			changeActive(userId);
+		});
+
+		function changePosition(userId, pos) {
+			$('#user-' + userId).css({
+				left: $('#position-' + pos).offset().left,
+				top: $('#position-' + pos).offset().top
+			});
+		}
+		function addUser(userId) {
+			$('#user-' + userId).removeClass("non-visible");
+		}
+		function changeActive(userId) {
+			//bold pin of the user
+			$(".active").removeClass("active");
+			$("#user-" + userId).addClass("active");
+		}
+	</script>
+
+</html>
+
+
 <style>
-	#text{
+	/*#text{
 		height: 200px;
 		width: 99%;
 		border: 1px solid #aaa;
@@ -15,10 +138,10 @@
 
 	.activeTurn {
 		background-color: red;
-	}
+	}*/
 </style>
 
-<div id='board'>
+<!-- <div id='board'>
 	<div id="user-1" class="hidden">user 1</div>
 	<div id="user-2" class="hidden">user 2</div>
 	<div id="user-3" class="hidden">user 3</div>
@@ -28,40 +151,6 @@
 	<div id="position-2">position</div>
 	<div id="position-3">position</div>
 	<div id="position-4">position</div>
-</div>
+</div> -->
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://localhost:8080/socket.io/socket.io.js"></script>
-<script>
-	var socket = io.connect('http://localhost:8080');
-	socket.on("connect", function(){
-		socket.emit('initialize_board');
-	});
-
-	//handle user events 
-	socket.on("update", function(userId, pos) {
-		changePosition(userId, pos);
-	});
-	socket.on("join", function(userId) {
-		addUser(userId);
-	});
-	socket.on("nextTurn", function(userId) {
-		changeActive(userId);
-	});
-
-	function changePosition(userId, pos) {
-		$('#user-' + userId).css({
-			left: $('#position-' + pos).offset().left,
-			top: $('#position-' + pos).offset().top
-		});
-	}
-	function addUser(userId) {
-		$('#user-' + userId).removeClass("hidden");
-	}
-	function changeActive(userId) {
-		//bold pin of the user
-		$(".activeTurn").removeClass("activeTurn");
-		$("#user-" + userId).addClass("activeTurn");
-	}
-</script>
