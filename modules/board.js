@@ -44,11 +44,15 @@ var board = {
 			if(user.pos == 17 || user.pos == 7)
 				show_card = true;
 
+			var show_giphy = false;
+			if(user.pos == 15 || user.pos == 5)
+				show_giphy = true;
+
 			// Send new data to user
 			user.emit('points', user.points);
 			user.emit('position', user.pos);
 
-			board.board_socket.emit('update', user.idIncrement, user.pos, show_card);
+			board.board_socket.emit('update', user.idIncrement, user.pos, show_card, show_giphy);
 
 			// Find next active
 			set_next_active_user();

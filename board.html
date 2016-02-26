@@ -80,6 +80,9 @@
 				</div>
 		   </section>
 		</div>
+		<div id="show_giphy" class="non-visible">
+			<iframe id="show_giphy_img" src=""></iframe>
+		</div>
 		<img id="qrcode" class="bounce-in-up"/>
 		<div id="get_card" class="non-visible">
 			<div class="hover panel">
@@ -103,8 +106,8 @@
 		});
 
 		//handle user events 
-		socket.on("update", function(userId, pos, show_card) {
-			changePosition(userId, pos, show_card);
+		socket.on("update", function(userId, pos, show_card, show_giphy) {
+			changePosition(userId, pos, show_card, show_giphy);
 		});
 		socket.on("join", function(userId) {
 			addUser(userId);
@@ -118,14 +121,28 @@
 			window.location.reload();
 		});
 
-		function changePosition(userId, pos, show_card) {
+		function changePosition(userId, pos, show_card, show_giphy) {
 			var activeUser = $( '#user-' + userId ).detach();
 			activeUser.appendTo('#position-' + pos);
-			if(show_card)
+			if(show_card) {
 				$('#get_card').removeClass('non-visible');
-			else
+			}
+			else {
 				$('#get_card').addClass('non-visible');
-
+			}
+			if(show_giphy) {
+				$.ajax({
+					url: 'http://api.giphy.com/v1/gifs/search?q=fat+guys&api_key=dc6zaTOxFJmzC',
+					type: 'get',
+					success: function(data) {
+						$('#show_giphy_img').attr('src', data.data[0].embed_url);
+						$('#show_giphy').removeClass('non-visible');
+					}
+				});
+			}
+			else {
+				$('#show_giphy').addClass('non-visible');
+			}
 			// hide the QR code if found
          	$('#qrcode').hide();
 		}
