@@ -100,6 +100,15 @@ input, textarea {
     left: 50%;
     margin-left: -165px;
 }
+#show_giphy_img {
+    zoom: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    -ms-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
+}
 .board-box {
     position: relative;
     border: 1px solid #eee;
