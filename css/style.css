@@ -102,6 +102,7 @@ input, textarea {
     margin-top: -175px;
     left: 50%;
     margin-left: -195px;
+    box-shadow: 1px 1px 10px #000;
 }
 .board-box {
     position: relative;
@@ -184,6 +185,7 @@ input, textarea {
     border: 3px solid #000;
     display: block;
     margin: 5px;
+    border-color: #eee;
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
@@ -233,6 +235,12 @@ input, textarea {
 }
 .single-player-app .board-box {
     display: none;
+}
+.single-player-app .board-box.current {
+    display: block !important;
+    margin: 0 auto;
+    width: 170px;
+    float: none;
 }
 .single-player-app .player {
     width: 100px;
