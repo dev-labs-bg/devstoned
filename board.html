@@ -115,6 +115,9 @@
 		socket.on("nextTurn", function(userId) {
 			changeActive(userId);
 		});
+		socket.on('userAvatar', function(userId, rawImageData){
+			changeAvatar(userId, rawImageData);
+		});
 
 		$('#restart').click(function(){
 			socket.emit('restart');
@@ -154,6 +157,13 @@
 			//bold pin of the user
 			$(".active").removeClass("active");
 			$("#user-" + userId).addClass("active");
+		}
+		function changeAvatar(userId, rawImageData) {
+			$('#user-' + userId).css({
+				'background-image': 'url(' + rawImageData + ')',
+				"background-position": "center center",
+    			"background-size": "cover"
+			});
 		}
 
 		// Show the qrcode

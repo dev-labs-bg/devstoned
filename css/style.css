@@ -78,6 +78,7 @@ input, textarea {
     -webkit-appearance: none;
 }
 .btn {
+    margin-top: 3px;
     font-family: 'waterlilyregular';
     color: #fff;
     padding: 5px 20px;
@@ -198,7 +199,7 @@ input, textarea {
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
-.player.test {
+.player.selfie {
     background: url(../img/selfie.jpg);
     background-size: cover;
 }

@@ -70,6 +70,9 @@ var board = {
 				all_ready = false;
 		});
 		return all_ready;
+	},
+	setImage: function(socket, rawImageData){
+		board.board_socket.emit('userAvatar', socket.idIncrement, rawImageData);
 	}
 }
 

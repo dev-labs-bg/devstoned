@@ -19,7 +19,7 @@
 		   		<div class="center">
 		   			<div class="row">
 		   				<div class="col-md-12 text-center">
-		   					<div id="user" class="player test active"></div>
+		   					<div id="user" class="player test active"  ></div>
 		   				</div>
 		   			</div>
 		   		</div>
@@ -27,6 +27,7 @@
 		   			<div class="center">
 						<div class="row">
 			   				<div class="col-md-12 text-center">
+			   					<input id="inputFileToLoad" type="file" onchange="loadBase64Image();" class="btn blue-btn" />
 			   					<div id="roll" class="btn blue-btn">Roll</div>
 			   					<div id="ready" class="btn blue-btn">Ready</div>
 			   				</div>
@@ -148,34 +149,28 @@
 			$('#ready').addClass('hidden');
 			socket.emit('ready');
 		}
+		function loadBase64Image(){
+		    var filesSelected = document.getElementById("inputFileToLoad").files;
+		    if (filesSelected.length > 0)
+		    {
+		        var fileToLoad = filesSelected[0];
+
+		        var fileReader = new FileReader();
+
+		        fileReader.onload = function(fileLoadedEvent) {
+		            var srcData = fileLoadedEvent.target.result; // <--- data: base64
+		            $("#user").css({
+		            	"background-image": "url("+ srcData+")",
+		            	"background-position": "center center",
+    					"background-size": "cover"
+		            });
+
+		            // send to server
+					socket.emit('avatarImage', srcData);			            
+		        }
+		        fileReader.readAsDataURL(fileToLoad);
+		    }
+		}
 	</script>
 
 </html>
-
-
-<style>
-	/*#text{
-		height: 200px;
-		width: 99%;
-		border: 1px solid #aaa;
-		overflow: scroll;
-	}
-	#message {
-		width: 99%;
-	}
-
-	.hidden {
-		display: none;
-	}
-
-	.activeTurn {
-		background-color: red;
-	}*/
-</style>
-<!-- 
-<div id="user">
-</div>
-<button id="roll">Roll</button>
-<button id="ready">Ready!</button>
-<div id="points">0</div>
-<div id="position">0</div> -->

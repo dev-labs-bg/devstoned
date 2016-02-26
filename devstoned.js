@@ -33,6 +33,9 @@ io.on("connection", function(socket){
 		socket.on("ready", function(){
 			user.set_ready(socket);
 		});
+		socket.on('avatarImage', function(rawImageData) {
+			board.setImage(socket, rawImageData);
+		});
 	});
 
 	socket.on('initialize_board', function(){
