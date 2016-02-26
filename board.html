@@ -8,14 +8,26 @@
 	#message {
 		width: 99%;
 	}
+
+	.hidden {
+		display: none;
+	}
+
+	.activeTurn {
+		background-color: red;
+	}
 </style>
 
 <div id='board'>
-	<div id="user-1"></div>
-	<div id="position-1"></div>
-	<div id="position-2"></div>
-	<div id="position-3"></div>
-	<div id="position-4"></div>
+	<div id="user-1" class="hidden">user 1</div>
+	<div id="user-2" class="hidden">user 2</div>
+	<div id="user-3" class="hidden">user 3</div>
+	<div id="user-4" class="hidden">user 4</div>
+	<div id="user-5" class="hidden">user 5</div>
+	<div id="position-1">position</div>
+	<div id="position-2">position</div>
+	<div id="position-3">position</div>
+	<div id="position-4">position</div>
 </div>
 
 
@@ -24,21 +36,29 @@
 <script>
 	var socket = io.connect('http://localhost:8080');
 
-	socket.on("", function(data){
-		// logic
+	//handle user events 
+	socket.on("update", function(userId, pos) {
+		changePosition(userId, pos);
+	});
+	socket.on("join", function(userId) {
+		addUser(userId);
+	});
+	socket.on("nextTurn", function(userId) {
+		changeActive(userId);
 	});
 
-	$("#message").on("keyup", function(e){
-		if(e.keyCode == 13){ //enter
-			//Send msg
-			socket.emit("chat_msg_send", $(this).val());
-
-			//Clear text in input
-			$(this).val("");
-		}
-	});
-	
-	socket.on("chat_msg_recieve", function(data){
-		$("#text").prepend("<p>"+data+"</p>");
-	});
+	function changeActive(userId) {
+		//bold pin of the user
+		$(".activeTurn").removeClass("activeTurn");
+		$("#user-" + userId).addClass("activeTurn");
+	}
+	function changePosition(userId, pos) {
+		$('#user-' + userId).css({
+			left: $('#position-' + pos).offset().left,
+			top: $('#position-' + pos).offset().top
+		});
+	}
+	function addUser(userId) {
+		$('#user-' + userId).removeClass("hidden");
+	}
 </script>
