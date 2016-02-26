@@ -35,6 +35,9 @@
 <script src="http://localhost:8080/socket.io/socket.io.js"></script>
 <script>
 	var socket = io.connect('http://localhost:8080');
+	socket.on("connect", function(){
+		socket.emit('initialize_board');
+	});
 
 	//handle user events 
 	socket.on("update", function(userId, pos) {
