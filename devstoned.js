@@ -1,4 +1,18 @@
-var io = require('socket.io').listen(8080);
+var socketio = require('socket.io');
+var request = require('request');
+var express = require('express');
+
+// App is the express server that serves the static files in public
+var app = express();
+//app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname));
+
+// Server is used both by express and by socket.io
+var server = require('http').createServer(app);
+server.listen(8080);
+
+// Start socket.io
+var io = socketio.listen(server);
 
 var user = require('./modules/user');
 var board = require('./modules/board');
