@@ -72,7 +72,7 @@
 				</div>
 		   </section>
 		</div>
-		<div id="get_card" class="hidden">
+		<div id="get_card" class="non-visible">
 			<div class="hover panel">
 	            <div class="front card">
 	            	<img src="img/cards/back.jpg"/>
@@ -95,8 +95,8 @@
 		});
 
 		//handle user events 
-		socket.on("update", function(userId, pos) {
-			changePosition(userId, pos);
+		socket.on("update", function(userId, pos, show_card) {
+			changePosition(userId, pos, show_card);
 		});
 		socket.on("join", function(userId) {
 			addUser(userId);
@@ -110,9 +110,13 @@
 			window.location.reload();
 		});
 
-		function changePosition(userId, pos) {
+		function changePosition(userId, pos, show_card) {
 			var activeUser = $( '#user-' + userId ).detach();
 			activeUser.appendTo('#position-' + pos);
+			if(show_card)
+				$('#get_card').removeClass('non-visible');
+			else
+				$('#get_card').addClass('non-visible');
 		}
 		function addUser(userId) {
 			$('#user-' + userId).removeClass("hidden");

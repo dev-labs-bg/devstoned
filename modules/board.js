@@ -29,18 +29,23 @@ var board = {
 	handle_roll: function(user, number) {
 		if(board.check_all_ready() && user.idIncrement == board.activeUser.idIncrement) {
 			// Increment points
-			if(user.pos + number > 20)
+			if(user.pos + number > 20) {
 				user.pos = number + user.pos - 20;
-			else 
+			}
+			else {
 				user.pos += number;
-
+			}
 			user.points += number;
+
+			var show_card = false;
+			if(user.pos == 17 || user.pos == 7)
+				show_card = true;
 
 			// Send new data to user
 			user.emit('points', user.points);
 			user.emit('position', user.pos);
 
-			board.board_socket.emit('update', user.idIncrement, user.pos);
+			board.board_socket.emit('update', user.idIncrement, user.pos, show_card);
 
 			// Find next active
 			set_next_active_user();
