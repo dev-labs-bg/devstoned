@@ -99,6 +99,7 @@
 	<!-- Scripts -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<script src="jshue.js"></script>
 	<script>
 		var socket = io.connect('/');
 		socket.on("connect", function(){
@@ -124,6 +125,13 @@
 			window.location.reload();
 		});
 
+		var hueColors = {
+			1: lightBlue,
+			2: lightRed,
+			3: lightGreen,
+			4: lightYellow
+		}
+
 		function changePosition(userId, pos, show_card, show_giphy) {
 			var activeUser = $( '#user-' + userId ).detach();
 			activeUser.appendTo('#position-' + pos);
@@ -135,17 +143,22 @@
 			}
 			if(show_giphy) {
 				$.ajax({
-					url: 'http://api.giphy.com/v1/gifs/search?q=fat+guys&api_key=dc6zaTOxFJmzC',
+					url: 'http://api.giphy.com/v1/gifs/search?q=naked&api_key=dc6zaTOxFJmzC',
 					type: 'get',
 					success: function(data) {
 						var random_index = Math.floor(Math.random() * data.data.length-1);
 						$('#show_giphy_img').attr('src', data.data[random_index].embed_url);
 						$('#show_giphy').removeClass('non-visible');
+
+						// start the random blinkage
+						initializeDiscoteque();
 					}
 				});
 			}
 			else {
 				$('#show_giphy').addClass('non-visible');
+				// stop the random blinkage ;(
+				stopDiscoteque();
 			}
 			// hide the QR code if found
          	$('#qrcode').hide();
@@ -157,6 +170,9 @@
 			//bold pin of the user
 			$(".active").removeClass("active");
 			$("#user-" + userId).addClass("active");
+
+			// change the color of the HUE to the currently active users color
+			hueColors[userId]();
 		}
 		function changeAvatar(userId, rawImageData) {
 			$('#user-' + userId).css({
@@ -186,6 +202,87 @@
          	jQuery('.bounce-in-up').addClass("visible animated bounceInUp");
          }
       });
+
+		// hue!!!
+		var ourLight = null;
+		var bridge = null;
+		var hue = jsHue();
+		var username = null;
+		hue.discover(
+		    function(bridges) {
+		        if(bridges.length === 0) {
+		            console.log('No bridges found. :(');
+		        }
+		        else {
+		            bridges.forEach(function(b) {
+		                console.log('Bridge found at IP address %s.', b.internalipaddress);
+						bridge = hue.bridge(b.internalipaddress);
+					    if (localStorage.getItem("lightusername") == null) {
+							bridge.createUser('foo application', function(data) {
+					    
+						    	if(data[0].success) {
+						    		username = data[0].success.username;
+						    		localStorage.setItem('lightusername', username);
+									connectHue(username);
+								}
+								else {
+									console.log('HUI Error');
+								}
+							});
+						}
+						else {
+							username = localStorage.getItem("lightusername");
+							connectHue(username);
+						}
+		            });
+		        }
+		    },
+		    function(error) {
+		        console.error(error.message);
+		    }
+		);
+
+		function connectHue(username) {
+			ourLight = bridge.user(username);
+		}
+
+		function clearHueUsername() {
+			localStorage.removeItem('lightusername');
+		}
+
+	    function lightBlue() {
+			ourLight.setLightState(2, { on: true, "hue":46920, bri: 254 }, function(data) { 
+				console.log(arguments);
+			});
+	    }
+	    function lightRed() {
+			ourLight.setLightState(2, { on: true, "hue":65280, bri: 254 }, function(data) { 
+				console.log(arguments);
+			});
+	    }
+	    function lightYellow() {
+			ourLight.setLightState(2, { on: true, "hue":12750, bri: 254 }, function(data) { 
+				console.log(arguments);
+			});
+	    }
+	    function lightGreen() {
+	    	ourLight.setLightState(2, { on: true, "hue":25500, bri: 254 }, function(data) { 
+				console.log(arguments);
+			});
+	    }
+
+	    var discotequeInterval = null;
+	    function initializeDiscoteque() {
+	    	var currentColor = 1;
+	    	discotequeInterval = setInterval(function() {
+	    		hueColors[(currentColor % 4 )+ 1]();
+	    		currentColor++;
+			}, 150);
+	    }
+	    function stopDiscoteque() {
+	    	clearInterval(discotequeInterval);
+	    }
+
 
 
 	</script>
