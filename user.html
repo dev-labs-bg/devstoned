@@ -19,7 +19,7 @@
 		   		<div class="center">
 		   			<div class="row">
 		   				<div class="col-md-12 text-center">
-		   					<div id="user" class="player test active blue"></div>
+		   					<div id="user" class="player test active"></div>
 		   				</div>
 		   			</div>
 		   		</div>
@@ -103,6 +103,7 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		var socket = io.connect('/');
+		var user_id = 0;
 		socket.on('connect', function(){
 			socket.emit('initialize_user');
 		});
@@ -113,6 +114,18 @@
 		});
 		socket.on('position', function(position) {
 			updatePosition(position);
+		});
+		socket.on('get_id', function(get_id) {
+			user_id = get_id;
+
+			var colors = {
+				1: 'blue',
+				2: 'red',
+				3: 'green',
+				4: 'yellow'
+			};
+
+			$('#user').addClass(colors[user_id]);
 		});
 
 		$('#roll').click(function(){

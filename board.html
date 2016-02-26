@@ -114,6 +114,9 @@
 		function changePosition(userId, pos) {
 			var activeUser = $( '#user-' + userId ).detach();
 			activeUser.appendTo('#position-' + pos);
+
+			// hide the QR code if found
+         	$('#qrcode').hide();
 		}
 		function addUser(userId) {
 			$('#user-' + userId).removeClass("hidden");
