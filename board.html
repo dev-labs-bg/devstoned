@@ -4,8 +4,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Devstone(d)</title>
 
-		<link rel="shortcut icon" href="img/favicon.ico" />
-
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="css/style.css" />
                               
@@ -18,19 +16,19 @@
 
 		<div class="main-container">
 		   <section class="body">
-		   		<div class="center board" id='board'>
+		   		<div class="center board" id="board">
 			   		<div class="row">
 						<div id="position-1" class="col-md-2 board-box start-box">
 							<span class="label">Start</span>
-							<div id="user-1" class="player non-visible test blue"></div>
+							<div id="user-1" class="player non-visible active test blue"></div>
 							<div id="user-2" class="player non-visible test red"></div>
-							<div id="user-3" class="player non-visible test active green"></div>
+							<div id="user-3" class="player non-visible test green"></div>
 							<div id="user-4" class="player non-visible test yellow"></div>
 						</div>
 						<div id="position-2" class="col-md-2 board-box simple-box"></div>
 						<div id="position-3" class="col-md-2 board-box duck-box"><span class="label">Bonus++</span></div>
 						<div id="position-4" class="col-md-2 board-box simple-box"></div>
-						<div id="position-5" class="col-md-2 board-box question-box"><span class="label">Surprice!?</span></div>
+						<div id="position-5" class="col-md-2 board-box question-box"><span class="label">Surprise!?</span></div>
 						<div id="position-6" class="col-md-2 board-box lunch-box"><span class="label">Lunch Time</span></div>
 					</div>
 					<div class="row">
@@ -67,7 +65,7 @@
 					</div>
 					<div class="row">
 						<div id="position-16" class="col-md-2 board-box black-box"><span class="label">Dev Jail</span></div>
-						<div id="position-15" class="col-md-2 board-box question-box"><span class="label">Surprice!?</span></div>
+						<div id="position-15" class="col-md-2 board-box question-box"><span class="label">Surprise!?</span></div>
 						<div id="position-14" class="col-md-2 board-box simple-box"></div>
 						<div id="position-13"class="col-md-2 board-box duck-box"><span class="label">Bonus++</span></div>
 						<div id="position-12" class="col-md-2 board-box simple-box"></div>
@@ -80,13 +78,10 @@
 	</body>
 
 	<!-- Scripts -->
-    <script src="js/jQuery.js"></script>
-    <script src="js/script.js"></script>
-
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<script>
-		var socket = io.connect('http://localhost:8080');
+		var socket = io.connect('/');
 		socket.on("connect", function(){
 			socket.emit('initialize_board');
 		});
@@ -103,10 +98,8 @@
 		});
 
 		function changePosition(userId, pos) {
-			$('#user-' + userId).css({
-				left: $('#position-' + pos).offset().left,
-				top: $('#position-' + pos).offset().top
-			});
+			var activeUser = $( '#user-' + userId ).detach();
+			activeUser.appendTo('#position-' + pos);
 		}
 		function addUser(userId) {
 			$('#user-' + userId).removeClass("non-visible");

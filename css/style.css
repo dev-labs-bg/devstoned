@@ -218,7 +218,7 @@ input, textarea {
     margin-bottom: 20px;
 }
 .single-player-app .board-box {
-    /*display: none;*/
+    display: none;
 }
 .single-player-app .player {
     width: 100px;
