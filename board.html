@@ -140,10 +140,11 @@
 			}
 			if(show_giphy) {
 				$.ajax({
-					url: 'http://api.giphy.com/v1/gifs/search?q=fat+guys&api_key=dc6zaTOxFJmzC',
+					url: 'http://api.giphy.com/v1/gifs/search?q=naked&api_key=dc6zaTOxFJmzC',
 					type: 'get',
 					success: function(data) {
-						$('#show_giphy_img').attr('src', data.data[0].embed_url);
+						var random_index = Math.floor(Math.random() * data.data.length-1);
+						$('#show_giphy_img').attr('src', data.data[random_index].embed_url);
 						$('#show_giphy').removeClass('non-visible');
 
 						// start the random blinkage
@@ -177,7 +178,7 @@
          data: { 
          	backcolor: 'ffffff',
          	ecl: 'L | M| Q | H',
-         	forecolor: '000000',
+         	forecolor: '2DA0EB',
          	pixed: 10,
          	text: window.location.origin + '/user.html',
          	type: 'url'

@@ -34,18 +34,11 @@
 		   			</div>
 		   			<div class="row">
 		   				<div class="col-md-12 text-center">
-		   					<div class="section-title">Current Position:</div>
-		   					<div id="position">0</div>
+		   					<div class="section-title">Current Position: <span id="position">0</span></div>
 		   				</div>
 		   			</div>
 			   		<div class="row">
-						<div id="position-1" class="col-md-2 board-box start-box">
-							<span class="label">Start</span>
-							<div id="user-1" class="player non-visible active test blue"></div>
-							<div id="user-2" class="player non-visible test red"></div>
-							<div id="user-3" class="player non-visible test green"></div>
-							<div id="user-4" class="player non-visible test yellow"></div>
-						</div>
+						<div id="position-1" class="col-md-2 board-box start-box"><span class="label">Start</span></div>
 						<div id="position-2" class="col-md-2 board-box simple-box"></div>
 						<div id="position-3" class="col-md-2 board-box duck-box"><span class="label">Bonus++</span></div>
 						<div id="position-4" class="col-md-2 board-box simple-box"></div>
@@ -92,6 +85,11 @@
 						<div id="position-12" class="col-md-2 board-box simple-box"></div>
 						<div id="position-11" class="col-md-2 board-box crossroad-box"><span class="label">Crossroad</span></div>
 					</div>
+					<div class="row">
+		   				<div class="col-md-12 text-center">
+		   					<div class="section-title">Total Points: <span id="points">0</span></div>
+		   				</div>
+		   			</div>
 				</div>
 		   </section>
 		</div>
@@ -140,8 +138,8 @@
 		}
 		function updatePosition(position) {
 			$('#position').text(position);
-			$('.board-box').hide();
-			$('#position-' + pos).show();
+			$('.board-box').removeClass('current');
+			$('#position-' + position).addClass('current');
 		}
 		function roll() {
 			socket.emit('roll');
