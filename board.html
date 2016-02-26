@@ -10,9 +10,12 @@
 	}
 </style>
 
-<div id='content'>
-	<input id="message" />
-	<div id="text"></div>
+<div id='board'>
+	<div id="user-1"></div>
+	<div id="position-1"></div>
+	<div id="position-2"></div>
+	<div id="position-3"></div>
+	<div id="position-4"></div>
 </div>
 
 
@@ -20,6 +23,10 @@
 <script src="http://localhost:8080/socket.io/socket.io.js"></script>
 <script>
 	var socket = io.connect('http://localhost:8080');
+
+	socket.on("", function(data){
+		// logic
+	});
 
 	$("#message").on("keyup", function(e){
 		if(e.keyCode == 13){ //enter
