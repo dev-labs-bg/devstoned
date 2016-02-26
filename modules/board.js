@@ -18,6 +18,9 @@ var board = {
 		user.points = 0;
 		user.pos = 0; 
 		user.idIncrement = numUsers;
+		// Send the id to the user
+		user.emit('get_id', user.idIncrement);
+
 		if(numUsers == 1)
 			board.activeUser = user;
 		board.users.push(user);

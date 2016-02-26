@@ -93,6 +93,13 @@ input, textarea {
 .board {
 
 }
+#qrcode {
+    position: absolute;
+    top: 50%;
+    margin-top: -165px;
+    left: 50%;
+    margin-left: -165px;
+}
 .board-box {
     position: relative;
     border: 1px solid #eee;
