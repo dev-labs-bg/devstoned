@@ -1,0 +1,20 @@
+{
+  "name": "devstoned",
+  "version": "2.0.0",
+  "description": "DevStoned",
+  "main": "devstoned.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "request": "^2.69.0",
+    "socket.io": "^1.4.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "devstoned"
+  ],
+  "author": "DevLabs",
+  "license": "ISC"
+}
