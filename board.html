@@ -1,0 +1,37 @@
+<style>
+	#text{
+		height: 200px;
+		width: 99%;
+		border: 1px solid #aaa;
+		overflow: scroll;
+	}
+	#message {
+		width: 99%;
+	}
+</style>
+
+<div id='content'>
+	<input id="message" />
+	<div id="text"></div>
+</div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script>
+	var socket = io.connect('http://localhost:8080');
+
+	$("#message").on("keyup", function(e){
+		if(e.keyCode == 13){ //enter
+			//Send msg
+			socket.emit("chat_msg_send", $(this).val());
+
+			//Clear text in input
+			$(this).val("");
+		}
+	});
+	
+	socket.on("chat_msg_recieve", function(data){
+		$("#text").prepend("<p>"+data+"</p>");
+	});
+</script>
