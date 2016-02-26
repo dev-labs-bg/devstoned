@@ -37,8 +37,22 @@ io.on("connection", function(socket){
 
 	socket.on('initialize_board', function(){
 		board.set_board(socket);
+
+		// Will reset the board, clear users and set the new board to this current board
+		socket.on('restart', function() {
+			board.set_board(socket);
+
+			// Reset count
+			numUsers = 1;
+			// Reset users
+			board.users = [];
+			// Reset active user
+			board.activeUser = 0;
+		});
 	});
 
 });
 // vsichki sockets: io.sockets.emit..
 // samo nashiq socket: socket
+
+console.log('READY!');
