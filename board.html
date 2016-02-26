@@ -17,13 +17,13 @@
 		<div class="main-container">
 		   <section class="body">
 		   		<div class="center board" id="board">
+					<div id="user-1" class="player hidden active test blue"></div>
+					<div id="user-2" class="player hidden test red"></div>
+					<div id="user-3" class="player hidden test green"></div>
+					<div id="user-4" class="player hidden test yellow"></div>
 			   		<div class="row">
 						<div id="position-1" class="col-md-2 board-box start-box">
 							<span class="label">Start</span>
-							<div id="user-1" class="player non-visible active test blue"></div>
-							<div id="user-2" class="player non-visible test red"></div>
-							<div id="user-3" class="player non-visible test green"></div>
-							<div id="user-4" class="player non-visible test yellow"></div>
 						</div>
 						<div id="position-2" class="col-md-2 board-box simple-box"></div>
 						<div id="position-3" class="col-md-2 board-box duck-box"><span class="label">Bonus++</span></div>
@@ -74,7 +74,7 @@
 				</div>
 		   </section>
 		</div>
-
+		<button id="restart">Restart</button>
 	</body>
 
 	<!-- Scripts -->
@@ -97,12 +97,17 @@
 			changeActive(userId);
 		});
 
+		$('#restart').click(function(){
+			socket.emit('restart');
+			window.location.reload();
+		});
+
 		function changePosition(userId, pos) {
 			var activeUser = $( '#user-' + userId ).detach();
 			activeUser.appendTo('#position-' + pos);
 		}
 		function addUser(userId) {
-			$('#user-' + userId).removeClass("non-visible");
+			$('#user-' + userId).removeClass("hidden");
 		}
 		function changeActive(userId) {
 			//bold pin of the user

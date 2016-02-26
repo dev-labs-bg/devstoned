@@ -16,7 +16,7 @@ var board = {
 	activeUser: 0,
 	add_user: function(user, numUsers) {
 		user.points = 0;
-		user.pos = 1; 
+		user.pos = 0; 
 		user.idIncrement = numUsers;
 		if(numUsers == 1)
 			board.activeUser = user;
@@ -44,6 +44,8 @@ var board = {
 
 			// Find next active
 			set_next_active_user();
+
+			board.board_socket.emit('nextTurn', board.activeUser.idIncrement);
 		}
 	},
 	set_board: function(socket) {

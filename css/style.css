@@ -60,7 +60,7 @@ body {
     float: left;
 }
 .hidden {
-    display: none;
+    display: none !important;
 }
 .uppercase {
     text-transform: uppercase;
@@ -169,7 +169,6 @@ input, textarea {
     border: 3px solid #000;
     display: block;
     margin: 5px;
-    display: block;
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
