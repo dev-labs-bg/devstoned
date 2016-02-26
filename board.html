@@ -74,6 +74,7 @@
 				</div>
 		   </section>
 		</div>
+		<img id="qrcode"/>
 		<button id="restart">Restart</button>
 	</body>
 
@@ -114,6 +115,28 @@
 			$(".active").removeClass("active");
 			$("#user-" + userId).addClass("active");
 		}
+
+		// Show the qrcode
+		$.ajax({
+         url: "https://pierre2106j-qrcode.p.mashape.com/api?backcolor=ffffff&ecl=L+%7C+M%7C+Q+%7C+H&forecolor=000000&pixel=10&text=hello%20devlabs&type=text+%7C+url+%7C+tel+%7C+sms+%7C+email",
+         data: { 
+         	backcolor: 'ffffff',
+         	ecl: 'L | M| Q | H',
+         	forecolor: '000000',
+         	pixed: 10,
+         	text: window.location.origin + '/user.html',
+         	type: 'url'
+         }, 
+         type: "GET",
+         beforeSend: function(xhr){
+         	xhr.setRequestHeader('X-Mashape-Key', '7SXKzjv3sPmshq6uoh4fCpaZbAo9p1e28QPjsnbKthhNHXfvMW');
+         },
+         success: function(response) { 
+         	$('#qrcode').attr('src', response); 
+         }
+      });
+
+
 	</script>
 
 </html>
