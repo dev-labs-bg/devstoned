@@ -21,6 +21,7 @@
 <div id="user">
 </div>
 <button id="roll">Roll</button>
+<button id="ready">Ready!</button>
 <div id="points">0</div>
 <div id="position">0</div>
 
@@ -31,7 +32,7 @@
 <script src="http://localhost:8080/socket.io/socket.io.js"></script>
 <script>
 	var socket = io.connect('http://localhost:8080');
-	socket.on("connect", function(){
+	socket.on('connect', function(){
 		socket.emit('initialize_user');
 	});
 
@@ -42,21 +43,25 @@
 	socket.on('position', function(position) {
 		updatePosition(position);
 	});
-	socket.on('nextTurn', function(userId) {
-		changeActive(userId);
-	});
 
-	$("#roll").click(function(){
+	$('#roll').click(function(){
 		roll();
+	});
+	$('#ready').click(function(){
+		ready();
 	});
 
 	function updatePoints(points) {
-		$("#points").text(points + ' pts.');
+		$('#points').text(points + ' pts.');
 	}
 	function updatePosition(position) {
-		$("#position").text(position);
+		$('#position').text(position);
 	}
 	function roll() {
 		socket.emit('roll');
+	}
+	function ready() {
+		$('#ready').addClass('hidden');
+		socket.emit('ready');
 	}
 </script>

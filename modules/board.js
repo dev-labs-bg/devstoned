@@ -6,7 +6,7 @@ function set_next_active_user() {
 	if(next_index >= board.users.length) {
 		next_index = 0;
 	}
-	
+
 	board.activeUser = board.users[next_index];
 }
 
@@ -27,7 +27,7 @@ var board = {
     	board.users.splice(board.users.indexOf(user), 1);
 	},
 	handle_roll: function(user, number) {
-		if(user.idIncrement == board.activeUser.idIncrement) {
+		if(board.check_all_ready() && user.idIncrement == board.activeUser.idIncrement) {
 			// Increment points
 			if(user.pos + number > 20)
 				user.pos = number + user.pos - 20;
@@ -48,6 +48,14 @@ var board = {
 	},
 	set_board: function(socket) {
 		board.board_socket = socket;
+	},
+	check_all_ready: function() {
+		var all_ready = true;
+		board.users.forEach(function(user){
+			if(user.is_ready != true)
+				all_ready = false;
+		});
+		return all_ready;
 	}
 }
 

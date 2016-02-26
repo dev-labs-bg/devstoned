@@ -10,11 +10,14 @@ io.on("connection", function(socket){
 		numUsers++;
 
 		socket.on("roll", function(){
-			var number = user.rollDice();
+			var number = user.roll_dice();
 			board.handle_roll(socket, number);
 		});
 		socket.on("disconnect", function(){
 			board.remove_user(socket);
+		});
+		socket.on("ready", function(){
+			user.set_ready(socket);
 		});
 	});
 
