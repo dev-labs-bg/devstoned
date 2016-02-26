@@ -6,10 +6,8 @@
 
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="css/style.css" />
-                              
-		<!--[if lt IE 9]>
-			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+        <link rel="stylesheet" type="text/css" href="css_leap/style.css" media="screen" />
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 	</head>
 
 	<body>
@@ -74,6 +72,16 @@
 				</div>
 		   </section>
 		</div>
+		<div id="get_card" class="">
+			<div class="hover panel">
+	            <div class="front card">
+	            	<img src="img/cards/back.jpg"/>
+	            </div>
+		        <div class="back card">
+		         	<img id="front_card" src=""/>
+		        </div>
+        	</div>
+		</div>
 
 	</body>
 
@@ -110,40 +118,9 @@
 			$("#user-" + userId).addClass("active");
 		}
 	</script>
-
+	<script src="js_leap/jquery.min.js"></script> 
+    <script src="js_leap/leap.js"></script>
+    <script src="js_leap/leap-plugins-0.1.4.js"></script>
+    <script src="js_leap/main.js"></script> 
 </html>
-
-
-<style>
-	/*#text{
-		height: 200px;
-		width: 99%;
-		border: 1px solid #aaa;
-		overflow: scroll;
-	}
-	#message {
-		width: 99%;
-	}
-
-	.hidden {
-		display: none;
-	}
-
-	.activeTurn {
-		background-color: red;
-	}*/
-</style>
-
-<!-- <div id='board'>
-	<div id="user-1" class="hidden">user 1</div>
-	<div id="user-2" class="hidden">user 2</div>
-	<div id="user-3" class="hidden">user 3</div>
-	<div id="user-4" class="hidden">user 4</div>
-	<div id="user-5" class="hidden">user 5</div>
-	<div id="position-1">position</div>
-	<div id="position-2">position</div>
-	<div id="position-3">position</div>
-	<div id="position-4">position</div>
-</div> -->
-
 
