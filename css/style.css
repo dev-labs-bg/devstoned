@@ -88,6 +88,9 @@ input, textarea {
 .blue-btn {
     background: #89CCF8;
 }
+.margin-top {
+    margin-top: 20px;
+}
 
 /*Custom Board Style - START*/
 .board {
@@ -96,9 +99,9 @@ input, textarea {
 #qrcode {
     position: absolute;
     top: 50%;
-    margin-top: -165px;
+    margin-top: -175px;
     left: 50%;
-    margin-left: -165px;
+    margin-left: -195px;
 }
 #show_giphy_img {
     zoom: 2;
@@ -176,6 +179,11 @@ input, textarea {
     background: url(../img/duck.jpg) no-repeat 0 0;
     /*background-image: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 93%, rgba(0,0,0,0.5) 100%), url(../img/duck.jpg);*/
     background-size: cover;
+}
+.players-holder {
+    position: absolute;
+    top: 0px;
+    left: -70px;
 }
 .player {
     width: 35px;

@@ -5,6 +5,7 @@
 		<title>Devstone(d)</title>
 
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/animate.css" />
 		<link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" type="text/css" href="css_leap/style.css" media="screen" />
         <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -15,10 +16,12 @@
 		<div class="main-container">
 		   <section class="body">
 		   		<div class="center board" id="board">
-					<div id="user-1" class="player hidden active test blue"></div>
-					<div id="user-2" class="player hidden test red"></div>
-					<div id="user-3" class="player hidden test green"></div>
-					<div id="user-4" class="player hidden test yellow"></div>
+		   			<div class="players-holder">
+						<div id="user-1" class="player hidden active test blue"></div>
+						<div id="user-2" class="player hidden test red"></div>
+						<div id="user-3" class="player hidden test green"></div>
+						<div id="user-4" class="player hidden test yellow"></div>
+					</div>
 			   		<div class="row">
 						<div id="position-1" class="col-md-2 board-box start-box">
 							<span class="label">Start</span>
@@ -69,13 +72,18 @@
 						<div id="position-12" class="col-md-2 board-box simple-box"></div>
 						<div id="position-11" class="col-md-2 board-box crossroad-box"><span class="label">Crossroad</span></div>
 					</div>
+					<div class="row">
+						<div class="col-md-12 text-center margin-top">
+							<div id="restart" class="btn blue-btn">Game Restart</div>
+						</div>
+					</div>
 				</div>
 		   </section>
 		</div>
-		<img id="qrcode"/>
 		<div id="show_giphy" class="non-visible">
 			<iframe id="show_giphy_img" src=""></iframe>
 		</div>
+		<img id="qrcode" class="bounce-in-up"/>
 		<div id="get_card" class="non-visible">
 			<div class="hover panel">
 	            <div class="front card">
@@ -86,7 +94,6 @@
 		        </div>
         	</div>
 		</div>
-		<button id="restart">Restart</button>
 	</body>
 
 	<!-- Scripts -->
@@ -165,6 +172,7 @@
          },
          success: function(response) { 
          	$('#qrcode').attr('src', response); 
+         	jQuery('.bounce-in-up').addClass("visible animated bounceInUp");
          }
       });
 
