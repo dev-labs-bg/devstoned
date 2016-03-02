@@ -13,8 +13,8 @@ How to run this code:
 - then `node devstoned`
 
 You'll have: 
-- `your_ip:3000/board.html` for the board
-- `your_ip:3000/user.html` for the players
+- `your_ip:8080/board.html` for the board
+- `your_ip:8080/user.html` for the players
 
 To restart the game:
 - Disconnect everyone (close `user.html` windows)
