@@ -6,7 +6,7 @@
 A Dev Labs project
 
 ## Summary
-This is a project from the 2016 DevHack Hackathon.
+This is a project from the 2016 DevHack Hackathon. From idea to code it was made in less than 12 hours, cut it some slack.
 
 How to run this code:
 - first `npm install`
